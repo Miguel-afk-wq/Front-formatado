@@ -1,0 +1,626 @@
+/* ═══════════════════════════════════════════════════════════════
+   Visual do projeto — tema "Mural de papel"
+   ═══════════════════════════════════════════════════════════════
+   Ideia por trás da paleta: um mural físico, de cortiça e papel.
+   O fundo lembra papel kraft/pergaminho; os cartões são "folhas"
+   claras presas nele; o dourado latão faz o papel de "pino" que
+   prende as coisas (o selinho da marca e a fitinha no card de
+   acesso usam essa cor); o azul-petróleo é a "tinta" usada para
+   ações. Nada de gradientes decorativos espalhados — o único
+   brilho de gradiente fica reservado para o pino da marca.
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+  /* papel */
+  --fundo: #eae2cd;
+  --fundo-2: #ddd2b1;
+  --cartao: #fbf8f0;
+  --borda: #cdbf99;
+  --texto: #2b2519;
+  --texto-fraco: #766b53;
+
+  /* tinta + pino */
+  --acento: #234b52;       /* tinta petróleo — ações principais */
+  --acento-escuro: #16333a;
+  --acento-2: #8a6d1f;     /* latão — pino, destaques, avisos */
+  --acento-2-claro: #d4a537;
+  --ok: #3f7d55;
+  --atencao: #8a6d1f;
+  --perigo: #a1332c;
+
+  --raio-cartao: 16px;
+  --raio: 9px;
+
+  --fonte-titulo: "Fraunces", Georgia, serif;
+  --fonte-corpo: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fonte-corpo);
+  background:
+    radial-gradient(1000px 520px at 8% -12%, rgba(255, 255, 255, 0.35) 0%, transparent 55%),
+    radial-gradient(800px 460px at 105% 8%, rgba(35, 75, 82, 0.08) 0%, transparent 55%),
+    var(--fundo);
+  color: var(--texto);
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+h1,
+h2 {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+code {
+  background: rgba(35, 75, 82, 0.1);
+  padding: 1px 6px;
+  border-radius: 6px;
+  font-size: 0.86em;
+  color: var(--acento-escuro);
+}
+
+/* ── Marca ─────────────────────────────────────────────── */
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+.marca h1 {
+  font-size: 1.2rem;
+}
+.marca p {
+  margin: 3px 0 0;
+  font-family: var(--fonte-corpo);
+  font-size: 0.76rem;
+  color: var(--texto-fraco);
+}
+/* O "pino" que prende o mural — bolinha metálica, não quadradinho. */
+.marca-ponto {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, var(--acento-2-claro), var(--acento-2) 70%);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.18), 0 6px 14px rgba(138, 109, 31, 0.35);
+  flex: none;
+}
+
+/* ── Tela de acesso ────────────────────────────────────── */
+.tela-acesso {
+  min-height: 88vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+.cartao-acesso {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  background: var(--cartao);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-cartao);
+  padding: 32px 28px 28px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 24px 50px rgba(43, 37, 25, 0.16),
+    0 4px 10px rgba(43, 37, 25, 0.08);
+}
+/* Fitinha de washi tape "prendendo" o cartão no mural — o único
+   floreio decorativo do tema, e só aparece aqui. */
+.cartao-acesso::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 34px;
+  width: 74px;
+  height: 26px;
+  background: rgba(138, 109, 31, 0.55);
+  border: 1px solid rgba(138, 109, 31, 0.35);
+  transform: rotate(-4deg);
+  box-shadow: 0 3px 6px rgba(43, 37, 25, 0.18);
+}
+.abas {
+  display: flex;
+  gap: 6px;
+  background: var(--fundo-2);
+  padding: 5px;
+  border-radius: 11px;
+  margin: 24px 0 18px;
+}
+.aba {
+  flex: 1;
+  padding: 9px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--texto-fraco);
+  font-family: var(--fonte-corpo);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+.aba.ativa {
+  background: var(--acento);
+  color: #f6f2e4;
+}
+.rodape-cartao {
+  margin: 18px 0 0;
+  font-size: 0.78rem;
+  color: var(--texto-fraco);
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* ── Campos e botões ───────────────────────────────────── */
+.campo {
+  display: block;
+  margin-bottom: 14px;
+}
+.campo-rotulo {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--texto-fraco);
+  margin-bottom: 6px;
+}
+.campo-input {
+  width: 100%;
+  padding: 11px 13px;
+  border-radius: var(--raio);
+  border: 1px solid var(--borda);
+  background: #fff;
+  color: var(--texto);
+  font-family: var(--fonte-corpo);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.campo-input:focus {
+  border-color: var(--acento);
+  box-shadow: 0 0 0 3px rgba(35, 75, 82, 0.16);
+}
+.campo-dica {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.72rem;
+  color: var(--texto-fraco);
+}
+.busca {
+  margin-bottom: 16px;
+}
+
+.botao {
+  width: 100%;
+  padding: 11px 16px;
+  border: 0;
+  border-radius: var(--raio);
+  font-family: var(--fonte-corpo);
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 0.12s, opacity 0.15s, background-color 0.15s;
+}
+.botao:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+.botao:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.botao-primario {
+  background: var(--acento);
+  color: #f6f2e4;
+  box-shadow: 0 4px 10px rgba(22, 51, 58, 0.28);
+}
+.botao-primario:hover:not(:disabled) {
+  background: var(--acento-escuro);
+}
+.botao-perigo {
+  background: rgba(161, 51, 44, 0.1);
+  color: var(--perigo);
+  border: 1px solid rgba(161, 51, 44, 0.35);
+}
+.botao-fantasma {
+  width: auto;
+  background: transparent;
+  color: var(--texto-fraco);
+  border: 1px solid var(--borda);
+  font-size: 0.82rem;
+  padding: 8px 12px;
+}
+.botao-fantasma:hover:not(:disabled) {
+  border-color: var(--acento);
+  color: var(--acento);
+}
+.linha-botoes {
+  display: flex;
+  gap: 8px;
+}
+.girando {
+  width: 13px;
+  height: 13px;
+  border: 2px solid rgba(246, 242, 228, 0.4);
+  border-top-color: #f6f2e4;
+  border-radius: 50%;
+  animation: girar 0.7s linear infinite;
+}
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Avisos ────────────────────────────────────────────── */
+.aviso {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border-radius: var(--raio);
+  margin-bottom: 14px;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+.aviso p {
+  margin: 0;
+}
+.aviso-erro {
+  background: rgba(161, 51, 44, 0.08);
+  border: 1px solid rgba(161, 51, 44, 0.3);
+  color: #7a2621;
+}
+.aviso-ok {
+  background: rgba(63, 125, 85, 0.1);
+  border: 1px solid rgba(63, 125, 85, 0.3);
+  color: #2b5a3b;
+}
+.aviso-info {
+  background: rgba(35, 75, 82, 0.08);
+  border: 1px solid rgba(35, 75, 82, 0.28);
+  color: var(--acento-escuro);
+}
+
+/* ── Painel ────────────────────────────────────────────── */
+.painel {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 22px;
+}
+.cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--borda);
+  margin-bottom: 22px;
+}
+.cabecalho-usuario {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.cabecalho-usuario strong {
+  display: block;
+  font-size: 0.88rem;
+}
+.cabecalho-usuario span {
+  font-size: 0.75rem;
+  color: var(--texto-fraco);
+}
+
+.conteudo {
+  display: grid;
+  grid-template-columns: 1fr 330px;
+  gap: 18px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .conteudo {
+    grid-template-columns: 1fr;
+  }
+}
+.coluna-lateral {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ── Cartões ───────────────────────────────────────────── */
+.cartao {
+  background: var(--cartao);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-cartao);
+  padding: 20px;
+  box-shadow: 0 10px 24px rgba(43, 37, 25, 0.06);
+}
+.cartao-perigo {
+  border-color: rgba(161, 51, 44, 0.3);
+}
+.cartao-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.cartao h2 {
+  font-size: 1.08rem;
+}
+.sub {
+  margin: 3px 0 0;
+  font-size: 0.78rem;
+  color: var(--texto-fraco);
+}
+.texto-perigo {
+  font-size: 0.82rem;
+  color: var(--texto-fraco);
+  line-height: 1.6;
+  margin: 0 0 14px;
+}
+.selo {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.selo-put {
+  background: rgba(138, 109, 31, 0.16);
+  color: var(--atencao);
+}
+.selo-delete {
+  background: rgba(161, 51, 44, 0.14);
+  color: var(--perigo);
+}
+
+/* ── Cards de usuário ──────────────────────────────────── */
+.grade-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+  gap: 11px;
+}
+.card-usuario {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  padding: 12px;
+  border-radius: var(--raio);
+  background: var(--fundo-2);
+  border: 1px solid var(--borda);
+  min-height: 66px;
+  animation: surgir 0.28s ease both;
+}
+.card-usuario.eu {
+  border-color: var(--acento);
+  box-shadow: 0 0 0 1px rgba(35, 75, 82, 0.3);
+}
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+.card-texto {
+  min-width: 0;
+}
+.card-texto strong {
+  display: block;
+  font-size: 0.88rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card-texto span,
+.card-texto small {
+  display: block;
+  font-size: 0.73rem;
+  color: var(--texto-fraco);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card-texto small {
+  opacity: 0.7;
+  margin-top: 2px;
+}
+.tag {
+  font-size: 0.62rem;
+  background: var(--acento-2);
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 20px;
+  vertical-align: middle;
+}
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--raio);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 0.82rem;
+  color: #fff;
+  flex: none;
+}
+.esqueleto {
+  background: var(--fundo-2);
+  animation: pulsar 1.2s ease-in-out infinite;
+}
+@keyframes pulsar {
+  50% {
+    opacity: 0.5;
+  }
+}
+.vazio {
+  text-align: center;
+  padding: 34px 12px;
+  color: var(--texto-fraco);
+}
+.vazio span {
+  font-size: 2rem;
+}
+.vazio p {
+  margin: 8px 0 0;
+  font-size: 0.86rem;
+}
+
+/* ── Console de rede ───────────────────────────────────── */
+/* Fica escuro de propósito — é a "gaveta" de depuração, não faz
+   parte do papel do mural, então contrasta com o resto da tela. */
+.rede {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #18140d;
+  border-top: 1px solid #3a3222;
+  font-family: "Cascadia Code", Consolas, monospace;
+  z-index: 50;
+}
+.rede-barra {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 16px;
+  background: transparent;
+  border: 0;
+  color: #a99b78;
+  font-size: 0.78rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+.rede-titulo em {
+  font-style: normal;
+  margin-left: 9px;
+  opacity: 0.65;
+}
+.rede-acoes {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.rede-limpar {
+  border: 1px solid #3a3222;
+  border-radius: 6px;
+  padding: 2px 8px;
+}
+.rede-limpar:hover {
+  color: #f6f2e4;
+}
+.rede-corpo {
+  max-height: 40vh;
+  overflow-y: auto;
+  border-top: 1px solid #3a3222;
+}
+.rede-vazio {
+  padding: 16px;
+  margin: 0;
+  color: #6b6148;
+  font-size: 0.76rem;
+}
+.rede-linha {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 62px 1fr 62px 58px;
+  gap: 10px;
+  align-items: center;
+  padding: 7px 16px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #241f14;
+  color: #b7a97f;
+  font-size: 0.74rem;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+.rede-linha:hover {
+  background: #221d13;
+}
+.rede-metodo {
+  font-weight: 800;
+  font-size: 0.66rem;
+  text-align: center;
+  padding: 2px 0;
+  border-radius: 5px;
+}
+.m-GET {
+  background: rgba(63, 125, 85, 0.22);
+  color: #7fcb9a;
+}
+.m-POST {
+  background: rgba(35, 75, 82, 0.3);
+  color: #7fb9c2;
+}
+.m-PUT {
+  background: rgba(138, 109, 31, 0.28);
+  color: #e0bb52;
+}
+.m-DELETE {
+  background: rgba(161, 51, 44, 0.26);
+  color: #e08b83;
+}
+.rede-url {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rede-status {
+  font-weight: 700;
+  text-align: center;
+}
+.s-ok {
+  color: #7fcb9a;
+}
+.s-atencao {
+  color: #e0bb52;
+}
+.s-erro {
+  color: #e08b83;
+}
+.s-aguardando {
+  color: #6b6148;
+}
+.rede-tempo {
+  text-align: right;
+  opacity: 0.6;
+}
+.rede-detalhe {
+  padding: 12px 16px 16px;
+  background: #100d08;
+  border-bottom: 1px solid #241f14;
+  display: grid;
+  gap: 12px;
+}
+.rede-detalhe b {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: #6b6148;
+}
+.rede-detalhe pre {
+  margin: 5px 0 0;
+  padding: 9px 11px;
+  background: #1c1810;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  color: #cdbf99;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 190px;
+  overflow: auto;
+}
